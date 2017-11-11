@@ -12,6 +12,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var colorCollectionView: UICollectionView!
     let infiniteSize = 10000000
+    lazy var autoScroller: AutoScroller = {
+        return AutoScroller(collectionView: colorCollectionView, size: infiniteSize, modelSize: colorList.count)
+    }()
 
     lazy var colorList: [UIColor] = {
         var colors = [UIColor]()
@@ -24,9 +27,10 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let midIndexPath = IndexPath(row: infiniteSize / 2, section: 0)
-        colorCollectionView.scrollToItem(at: midIndexPath, at: .centeredHorizontally, animated: false)
+        autoScroller.setup()
     }
+
+
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
